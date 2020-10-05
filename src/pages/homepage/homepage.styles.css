@@ -1,0 +1,7 @@
+.main-center-container{
+    background-color: #ffffff;
+    height: 100vh;
+    border-radius: 2.6rem;
+    position: relative;
+    top: -10vh
+}

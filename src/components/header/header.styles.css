@@ -1,0 +1,22 @@
+.main-top-container{
+    background-color: #195848;
+    /* border-top-left-radius: 2.6rem;
+    border-top-right-radius: 2.6rem; */
+}
+.main-top-container h1{
+    color: white;
+    font-weight: 500;
+}
+.btn:focus{
+    box-shadow: none;
+}
+.btn-channel{
+    color: #3c7769;
+    font-weight: 600;
+    border-radius: 1.25rem;
+}
+.btn-channel:hover{
+    color: #d8d9e4;
+    background-color: #82a89e;
+    border-radius: 1.25rem;
+}

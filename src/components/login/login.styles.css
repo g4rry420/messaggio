@@ -1,0 +1,27 @@
+.both-buttons-container{
+  width: 50%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+.both-buttons-container p span{
+  color: var(--primaryColor);
+  cursor: pointer;
+  font-weight: 600;
+  padding-bottom: 3px;
+}
+.both-buttons-container p span:hover{
+  border-bottom: 1px solid var(--primaryColor);
+}
+
+.google-login{
+  display: inline-block;
+}
+.google-login .custom-button {
+  background-color: #4285F4;
+  border: 1px solid #4285F4;
+}
+.google-login .custom-button:hover{
+  background-color: transparent;
+  color: #4285F4;
+}

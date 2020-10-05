@@ -1,0 +1,10 @@
+.login-form-input{
+    border: 0;
+    border-bottom: 1px solid #195848;
+    color:black !important;
+    font-weight: 600;
+}
+.login-form-input:focus{
+    box-shadow: none;
+    border-bottom: 1px solid #195848;
+}

@@ -1,0 +1,11 @@
+.custom-button{
+    background-color: #195848;  
+    color: white;
+    font-weight: 600;
+    /* transition: var(--mainTransition); */
+    border: 1px solid #195848;
+}
+.custom-button:hover {
+    background: transparent;
+    color: #195848;
+}
