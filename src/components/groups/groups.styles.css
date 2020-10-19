@@ -1,0 +1,39 @@
+.list-main-container{
+    padding: 0;
+}
+.list-container{
+    list-style-type: none;
+    padding: 0;
+}
+.list-container li {
+    display: flex;
+    border-bottom: 1px solid #195848;
+    max-height: 100px;
+    width: 100%;
+    color:  #494949;
+}
+.list-container li:hover{
+    background:  #82a89e;
+    color: white;
+}
+.list-container li .img-container{
+    background-color: white;
+    border-radius: 50%;
+    width: 100%;
+    display: contents;
+}
+.list-container li .img-container img{
+    max-height: 80px;
+    width: 20%;
+    background: white;
+    border-radius: 50px;
+}
+.list-container li .list-content h3{
+    font-weight: 500;
+    font-size: 1.7rem;
+}
+.list-container li a{
+    color:  #494949;
+    text-decoration: none;
+    width: 100%;
+}

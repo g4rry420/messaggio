@@ -6,12 +6,15 @@ import { BrowserRouter } from "react-router-dom"
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import MainContextProvider from "./context/main-context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <MainContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </MainContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,0 +1,14 @@
+.heading-in-create-group{
+    margin: 0 !important;
+}
+.create-group-form textarea{
+    font-weight: 600;
+    color: black;
+    border: none;
+    border-bottom: 1px solid var(--primaryColor);
+}
+.create-group-form textarea:focus{
+    box-shadow: none;
+    color: black;
+    border-color: var(--primaryColor);
+}

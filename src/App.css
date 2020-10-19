@@ -1,3 +1,14 @@
 .container{
     max-width: 600px;
 }
+.main-center-container{
+    background-color: #ffffff;
+    height: 75vh;
+    border-top-left-radius: 2.6rem;
+    border-top-right-radius: 2.6rem;
+    position: relative;
+    top: -10vh;
+    border-left: 1px solid #195848;
+    border-right: 1px solid #195848;
+    border-bottom: 1px solid #195848;
+}

@@ -1,0 +1,21 @@
+.heading-container-in-login .container{
+    padding: 0 !important;
+}
+.heading-container-in-login .text-center{
+    text-align: left !important;
+}
+.heading-container-in-login .text-center .my-5 {
+    margin: 0 !important;
+}
+.heading-container-in-login p {
+    font-weight: lighter;
+}
+.login-buttons-container p span{
+    color: var(--primaryColor);
+    cursor: pointer;
+    font-weight: 600;
+    padding-bottom: 3px;
+  }
+.login-buttons-container p span:hover{
+    border-bottom: 1px solid var(--primaryColor);
+}

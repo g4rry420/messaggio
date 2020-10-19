@@ -3,23 +3,35 @@ import React,{ useState } from 'react'
 import "./login.styles.css"
 import FormInput from "../form-input/form-input.component"
 import CustomButton from "../custom-button/custom-button.component"
-import { signInWithGoogle } from "../../firebase/firebase.utils"
+import { signInWithGoogle, auth } from "../../firebase/firebase.utils"
 
-export default function Login() {
+export default function Login( {displayLogin, setDisplayLogin}) {
     const [login, setLogin] = useState({
         email: "",
         password: ""
     })
     
-      const handleChange = (e) => {
-        const { value, name } = e.target;
-          setLogin({...login, [name]: value});
-          console.log(name, value)
-      }
-    
-      const handleSubmit = (e) => {
-        // e.preventDefault();
-      }
+    const handleChange = (e) => {
+      const { value, name } = e.target;
+        setLogin({...login, [name]: value});
+    }
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const { email, password } = login;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+        } catch (error) {
+            console.log(error)
+        }
+
+      setLogin({ email: "", password: "" });
+    }
+
+    const handleSignUp = () => {
+      setDisplayLogin(!displayLogin);
+    }
   
     return(
     <form className="pt-5" onSubmit={handleSubmit}>
@@ -31,7 +43,7 @@ export default function Login() {
             <CustomButton  type="button" title="Sign In With Google" button="login-button" />
           </div>
           <CustomButton type="submit" title="Login" button="login-button" />
-          <p>Didn't have account yet ? <span>SignUp</span> </p>
+          <p>Didn't have account yet ? <span onClick={handleSignUp}>SignUp</span> </p>
         </div>
     </form>
     )
