@@ -1,5 +1,6 @@
 .list-main-container{
     padding: 0;
+    overflow-y: auto;
 }
 .list-container{
     list-style-type: none;
@@ -36,4 +37,10 @@
     color:  #494949;
     text-decoration: none;
     width: 100%;
+}
+
+@media only screen and (max-width: 700px){
+    .list-container li .list-content h3{
+        font-size: 1.2rem;
+    }
 }

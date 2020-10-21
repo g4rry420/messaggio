@@ -40,7 +40,7 @@ export default function CreateGroup() {
                 <textarea onChange={handleChange} name="description" value={description} className="form-control" placeholder="Description" name="description" rows="4"></textarea>
             </div>
             <div className="text-center">
-                <CustomButton type="submit" title="Create" button="create-group-button" />
+                <CustomButton  type="submit" title="Create" button="create-group-button" />
             </div>
         </form>
         </>

@@ -47,7 +47,7 @@ export default function Login( {displayLogin, setDisplayLogin}) {
 
       <div className="text-center d-md-flex justify-content-around both-buttons-container">
         <div onClick={signInWithGoogle} className="google-login mb-4">
-          <CustomButton  type="button" title="Sign In With Google" button="login-button" />
+          <CustomButton  type="button" title="Sign&nbsp;In&nbsp;With&nbsp;Google" button="login-button" />
         </div>
         <CustomButton type="submit" title="Login" button="login-button" />
         <p>Didn't have account yet ? <span onClick={handleSignUp}>SignUp</span> </p>

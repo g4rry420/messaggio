@@ -29,6 +29,7 @@ export default function IndividualUser({ location: { state }  }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+
         let combineUserId = "";
         if(currentUser.uid < state.userId){
            combineUserId = currentUser.uid + state.userId;
