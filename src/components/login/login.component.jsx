@@ -45,7 +45,7 @@ export default function Login( {displayLogin, setDisplayLogin}) {
       <FormInput name="email" handleChange={handleChange} value={login.email} type="email" placeholder="Email" />
       <FormInput name="password" handleChange={handleChange} value={login.password} type="password" placeholder="Password" />
 
-      <div className="text-center d-md-flex justify-content-around both-buttons-container">
+      <div className="text-center d-flex justify-content-around both-buttons-container">
         <div onClick={signInWithGoogle} className="google-login mb-4">
           <CustomButton  type="button" title="Sign&nbsp;In&nbsp;With&nbsp;Google" button="login-button" />
         </div>

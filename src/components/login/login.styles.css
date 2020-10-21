@@ -1,7 +1,7 @@
 .both-buttons-container{
-  width: 50%;
-  margin: 0 auto;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 .both-buttons-container p span{
@@ -27,9 +27,6 @@
 }
 
 @media only screen and (max-width: 700px){
-  .both-buttons-container{
-    width: 75%;
-  }
   .google-login .custom-button, .login-button{
     font-size: 0.8rem;
   }
