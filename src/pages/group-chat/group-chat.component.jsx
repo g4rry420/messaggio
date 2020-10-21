@@ -28,7 +28,7 @@ export default function GroupChat({ location: { state }  }) {
         setGroupChatMessage(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         let scrollHeight = chatMessagesRef.current.scrollHeight;
@@ -41,9 +41,9 @@ export default function GroupChat({ location: { state }  }) {
             groupId: state.groupId,
         }
 
-        groupMessages(currentUser, dataToSend)
+        await groupMessages(currentUser, dataToSend)
 
-        setGroupChatList([...groupChatList,{ id: uuidv4(), message: groupChatMessage, time: new Date().getHours() + ":" + new Date().getMinutes(), sendBy:  currentUser.displayName, userId: currentUser.uid }]);
+        // setGroupChatList([...groupChatList,{ id: uuidv4(), message: groupChatMessage, time: new Date().getHours() + ":" + new Date().getMinutes(), sendBy:  currentUser.displayName, userId: currentUser.uid }]);
         setGroupChatMessage("");
     }
     return (

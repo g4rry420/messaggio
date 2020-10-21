@@ -1,5 +1,5 @@
 import React,{ useContext, useEffect, useRef } from 'react'
-import { Link, withRouter, Redirect } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 import "./header.styles.css"
 import { auth } from "../../firebase/firebase.utils"
@@ -35,7 +35,7 @@ const Header = (props) => {
                         <>
                         <Link  to="/chats"><button className="btn btn-channel">Chats</button></Link>
                         <Link  to="/groups"><button className="btn btn-channel">Groups</button></Link>
-                        <Link to="/creategroup"><button className="btn btn-channel">Create Group</button></Link>
+                        <Link to="/creategroup"><button className="btn btn-channel">Create&nbsp;Group</button></Link>
                         <button onClick={() => auth.signOut()} className="btn btn-channel">LogOut</button>
                         </>
                     )

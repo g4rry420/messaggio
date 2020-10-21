@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect } from 'react'
+import React,{ useContext, useEffect,useRef,useState } from 'react'
 import { Link } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
 
@@ -12,7 +12,17 @@ export default function IndividualUser({ location: { state }  }) {
 
 
     const { individualChatList, setIndividualChatList,individualChatMessage, setIndividualChatMessage,
-            currentUser, combineUserId, setCombineUserId } = useContext(MainContext);
+            currentUser, combineUserId, setCombineUserId } = useContext(MainContext);   
+
+    const chatMessagesRef = useRef();
+
+    useEffect(() => {
+        if(individualChatList.length){
+            let scrollHeight = chatMessagesRef.current.scrollHeight;
+            chatMessagesRef.current.scrollTop = scrollHeight;
+        }
+
+    },[individualChatList.length])
 
     useEffect(() => {
         if(currentUser.uid < state.userId){
@@ -26,9 +36,11 @@ export default function IndividualUser({ location: { state }  }) {
         setIndividualChatMessage(e.target.value);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        let scrollHeight = chatMessagesRef.current.scrollHeight;
+        chatMessagesRef.current.scrollTop = scrollHeight;
 
         let combineUserId = "";
         if(currentUser.uid < state.userId){
@@ -46,22 +58,21 @@ export default function IndividualUser({ location: { state }  }) {
             message: individualChatMessage
         }
 
-        individualUserMessages(currentUser, dataToSend)
+        await individualUserMessages(currentUser, dataToSend)
 
-        setIndividualChatList([...individualChatList, {id: uuidv4(),  message: individualChatMessage, time: new Date().getHours() + ":" + new Date().getMinutes(), sendBy:  currentUser.displayName.split(" ")[0]}]);
+        // setIndividualChatList([...individualChatList, {id: uuidv4(),  message: individualChatMessage, time: new Date().getHours() + ":" + new Date().getMinutes(), sendBy:  currentUser.displayName}]);
         setIndividualChatMessage("");
     }
-
     return (
         <div className="chat-container">
             <div className="group-heading text-center">
                 <h4 className="display-4"> { state.sendby } </h4>
             </div>
-            <div className="chat-messages">
+            <div ref={chatMessagesRef} className="chat-messages">
                 <ul className="chat-list-container mt-3">
                 {
-                    individualChatList && individualChatList.map(list => (
-                        <li key={list.id}  className={`mb-4 ${currentUser  && currentUser.uid === list.userId && "chat-reciever"}`}>{list.message}
+                    individualChatList && individualChatList.map((list, idx) => (
+                        <li key={list.id}  className={`mb-4 ${currentUser  && currentUser.displayName === list.sendBy && "chat-reciever"}`}>{list.message}
                             <span className="time-stamp"> {list.time} </span>
                             <div className="dropdown-profile">
                                 <Link to={``}> 

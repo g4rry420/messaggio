@@ -105,10 +105,6 @@ const MainContextProvider = (props) => {
         return () => unsubscribe();              
     },[currentUser])
 
-    const objectsToArray = (dataForObjects) => {
-        return Object.keys(dataForObjects).map(key => dataForObjects[key])
-    };
-
     return (
         <MainContext.Provider value={{ currentUser, groupsList, setGroupsList,groupChatMessage, setGroupChatMessage,
             groupChatList, setGroupChatList,createGroup, setCreateGroup, groupID, setGroupID,
