@@ -1,5 +1,5 @@
 import React,{ useContext, useEffect, useRef } from 'react'
-import { Link, withRouter } from "react-router-dom"
+import { Link, withRouter, Redirect } from "react-router-dom"
 
 import "./header.styles.css"
 import { auth } from "../../firebase/firebase.utils"
