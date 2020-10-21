@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Redirect } from "react-router-dom"
 
 import "./signup.styles.css"
 import CustomButton from "../custom-button/custom-button.component"
 import FormInput from "../form-input/form-input.component"
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils"
+import { MainContext } from "../../context/main-context"
 
 export default function SignUp({ displayLogin, setDisplayLogin }) {
+
+    const { currentUser } = useContext(MainContext);
+
     const [signupForm, setSignUpForm] = useState({
         displayName: "",
         email: "",
@@ -45,6 +50,8 @@ export default function SignUp({ displayLogin, setDisplayLogin }) {
     const handleLogin = () => {
         setDisplayLogin(!displayLogin);
     }
+
+    if(currentUser) return <Redirect to="/groups" />
 
     const { displayName, email, password,confirmPassword } = signupForm;
     return (

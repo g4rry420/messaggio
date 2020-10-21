@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
+import { Redirect } from "react-router-dom"
 
 import "./create-group.styles.css"
 import FormInput from "../../components/form-input/form-input.component";
@@ -10,6 +11,8 @@ import { MainContext } from "../../context/main-context"
 export default function CreateGroup() {
 
     const { currentUser, createGroup, setCreateGroup } = useContext(MainContext);
+
+    if(!currentUser) return <Redirect to="/loginorsignup" />
 
     const handleChange = (e) => {
         const { name, value } = e.target;

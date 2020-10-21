@@ -83,12 +83,77 @@ export const groupMessages = async (userAuth, groupMessage) => {
         try {
             await groupMessagesRef.set({
                 sendBy: displayName,
+                userId: userAuth.uid,
                 createdAt,
                 message: groupMessage.message
             })
         } catch (error) {
             console.log("error while setting the group messages", error.message)
         }
+}
+
+export const individualUserMessages = async (userAuth, individualmessages) => {
+    if(!userAuth) return;
+    if(!individualmessages) return;
+
+    const messageRef = firestore.doc(`messages/${individualmessages.combineUserId}`);
+    const messageRefSnapshot = await messageRef.get();
+    
+    if(!messageRefSnapshot.exists) {
+        try {
+            await messageRef.set({
+                senderName: individualmessages.senderName,
+                receiverName: individualmessages.receiverName
+            })
+        } catch (error) {
+            console.log("Error while setting names for individual users", error.message)
+        }
+    }
+
+    const individualMessageRef = await firestore.collection("messages").doc(individualmessages.combineUserId).collection("individualMessages").doc();
+
+    const {displayName, uid} = userAuth;
+    const createdAt = new Date();
+
+        try {
+            individualMessageRef.set({
+                displayName,
+                userId: uid,
+                createdAt,
+                message: individualmessages.message
+            })
+        } catch (error) {
+            console.log("Error while sending individual message", error.message)
+        }
+    
+    const chatsRef = firestore.doc(`chats/${userAuth.uid}/`);
+    const chatsRefSnapshot = await chatsRef.get();
+
+    if(!chatsRefSnapshot.exists) {
+        try {
+            await chatsRef.set({
+                displayName
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    
+    const chatsFriendsRef = firestore.doc(`chats/${userAuth.uid}/chatsFriends/${individualmessages.receiverId}`);
+    const chatsFriendsRefSnapshot = await chatsFriendsRef.get();
+
+    if(!chatsFriendsRefSnapshot.exists) {
+        try {
+            await chatsFriendsRef.set({
+                id: individualmessages.receiverId,
+                name: individualmessages.receiverName,
+                createdAt
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    
 }
 
 export const auth = firebase.auth();

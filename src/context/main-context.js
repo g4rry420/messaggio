@@ -8,18 +8,23 @@ export const MainContext = createContext();
 const MainContextProvider = (props) => {
 
     const [currentUser, setCurrentUser] = useState(null);
-    const [headerDisplay, setHeaderDisplay] = useState(true);
 
-    const [chatMessage, setChatMessage] = useState("")
-    const [chatList, setChatList] = useState([]);
+    const [groupChatMessage, setGroupChatMessage] = useState("")
+    const [groupChatList, setGroupChatList] = useState([]);
 
-    const [groupsContent, setGroupsContent] = useState([]);
+    const [individualChatList, setIndividualChatList] = useState([]);
+    const [individualChatMessage, setIndividualChatMessage] = useState("");
+    const [combineUserId, setCombineUserId] = useState(null);
+
+    const [groupsList, setGroupsList] = useState([]);
     const [groupID, setGroupID] = useState(null);
 
     const [createGroup, setCreateGroup] = useState({
         groupName: "",
         description: ""
     });
+
+    const [chatsList, setChatsList] = useState([]);
 
     useEffect(() => {
         const unsubcribe = auth.onAuthStateChanged(async userAuth => {
@@ -48,7 +53,7 @@ const MainContextProvider = (props) => {
             await querySnapshot.forEach(doc => {
                 docArray.push({id:doc.id, title: doc.data().name, desc: doc.data().desc})
             })
-            setGroupsContent(docArray)
+            setGroupsList(docArray)
         })
     },[createGroup])
 
@@ -59,27 +64,56 @@ const MainContextProvider = (props) => {
                             .orderBy("createdAt").onSnapshot(async querySnapshot => {
                 let docArray = [];
                 await querySnapshot.forEach(doc => {
-                    docArray.push({ id: doc.id, message: doc.data().message, time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().sendBy.split(" ")[0] })
+                    docArray.push({ id: doc.id, message: doc.data().message, time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().sendBy, userId: doc.data().userId })
                 })
-                setChatList(docArray)
+                setGroupChatList(docArray)
             })
         }
         if(!unsubscribe) return;
         return () => unsubscribe()
     }, [groupID])
 
-    const getGroupId = (id) => {
-        return groupsContent.filter(group => group.id === id)
-    }
+    useEffect(() => {
+        let unsubscribe;
+        if(combineUserId){
+            unsubscribe = firestore.collection("messages").doc(combineUserId).collection("individualMessages")
+                            .orderBy("createdAt").onSnapshot(async querySnapshot => {
+                                let docArray = [];
+                                await querySnapshot.forEach(doc => {
+                                    docArray.push({ id: doc.id, message: doc.data().message,  time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().displayName, userId: doc.data().userId })
+                                })
+                                setIndividualChatList(docArray);
+                            })
+        }
+
+        if(!unsubscribe) return;
+        return () => unsubscribe();
+
+    },[combineUserId])
+
+    useEffect(() => {
+        if(!currentUser) return
+        let unsubscribe = firestore.collection("chats").doc(currentUser.uid).collection("chatsFriends")
+                      .orderBy("createdAt").onSnapshot(async querySnapshot => {
+                          let docArray = [];
+                          await querySnapshot.forEach(doc => {
+                              docArray.push({ id: doc.id, name: doc.data().name })
+                          })
+                          setChatsList(docArray);
+                      })
+
+        return () => unsubscribe();              
+    },[currentUser])
 
     const objectsToArray = (dataForObjects) => {
         return Object.keys(dataForObjects).map(key => dataForObjects[key])
     };
 
     return (
-        <MainContext.Provider value={{ currentUser,headerDisplay, setHeaderDisplay, 
-            groupsContent,chatMessage, setChatMessage,chatList, setChatList,createGroup, setCreateGroup, getGroupId
-            ,groupID, setGroupID }}>
+        <MainContext.Provider value={{ currentUser, groupsList, setGroupsList,groupChatMessage, setGroupChatMessage,
+            groupChatList, setGroupChatList,createGroup, setCreateGroup, groupID, setGroupID,
+            individualChatList, setIndividualChatList,individualChatMessage, setIndividualChatMessage
+            ,combineUserId, setCombineUserId, chatsList, setChatsList }}>
             {props.children}
         </MainContext.Provider>
     )

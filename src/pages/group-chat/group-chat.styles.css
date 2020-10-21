@@ -2,8 +2,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 75vh;
+    height: 80vh;
     overflow-y: auto;
+}
+.chat-container .chat-messages{
+    position: relative;
+    flex: 2;
 }
 .back-container a{
     color: #212529;
@@ -20,6 +24,8 @@
 }
 .message-form-container{
     display: flex;
+    position: sticky;
+    bottom: 0;
 }
 .message-form-container .form-group{
     flex: 2;
@@ -54,6 +60,11 @@
     top: 0px;
     font-size: xx-small;
     right: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.chat-list-container li .chat-name:hover{
+    color: white;
 }
 .chat-list-container li  .time-stamp{
     margin-left: 10px;
@@ -62,4 +73,29 @@
 .chat-list-container  .chat-reciever{
     margin-left: auto;
     background-color: #e5eceb;
+}
+.group-heading{
+    border-top-left-radius: 2.6rem;
+    border-top-right-radius: 2.6rem;
+    background-color: #82a89e;
+}
+.group-heading h4{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+.dropdown-profile{
+    position: relative;
+    display: none;
+}
+.dropdown-profile button{
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    font-size: 12px;
+}
+.dropdown-profile .btn-personally{
+    background-color: #82a89e;
+}
+.chat-list-container li .chat-name:hover + .time-stamp + .dropdown-profile, .chat-list-container li .chat-name + .time-stamp + .dropdown-profile:hover{
+    display: initial;
 }
