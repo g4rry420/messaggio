@@ -138,7 +138,7 @@ export const individualUserMessages = async (userAuth, individualmessages) => {
             console.log(error.message)
         }
     }
-    
+
     const chatsFriendsRef = firestore.doc(`chats/${userAuth.uid}/chatsFriends/${individualmessages.receiverId}`);
     const chatsFriendsRefSnapshot = await chatsFriendsRef.get();
 
@@ -153,7 +153,34 @@ export const individualUserMessages = async (userAuth, individualmessages) => {
             console.log(error.message)
         }
     }
+
+    const chatsRecieverRef = firestore.doc(`chats/${individualmessages.receiverId}/`);
+    const chatsRecieverRefSnapshot = await chatsRecieverRef.get();
+
+    if(!chatsRecieverRefSnapshot.exists){
+        try {
+            await chatsRecieverRef.set({
+                displayName: individualmessages.receiverName
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
     
+    const chatsRecieverFriendRef = firestore.doc(`chats/${individualmessages.receiverId}/chatsFriends/${userAuth.uid}`);
+    const chatsRecieverFriendRefSnapshot = await chatsRecieverFriendRef.get();
+
+    if(!chatsRecieverFriendRefSnapshot.exists){
+        try {
+            await chatsRecieverFriendRef.set({
+                id: userAuth.uid,
+                name: displayName,
+                createdAt
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 }
 
 export const auth = firebase.auth();

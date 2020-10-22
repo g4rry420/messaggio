@@ -26,6 +26,8 @@ const MainContextProvider = (props) => {
 
     const [chatsList, setChatsList] = useState([]);
 
+    // const [unseenMessages, setUnseenMessages] = useState([]);
+
     useEffect(() => {
         const unsubcribe = auth.onAuthStateChanged(async userAuth => {
             if(userAuth) {
@@ -58,33 +60,29 @@ const MainContextProvider = (props) => {
     },[createGroup])
 
     useEffect(() => {
-        let unsubscribe;
-        if(groupID){
-            unsubscribe = firestore.collection("messages").doc(groupID).collection("groupMessages")
+        if(!groupID) return;
+        let unsubscribe = firestore.collection("messages").doc(groupID).collection("groupMessages")
                             .orderBy("createdAt").onSnapshot(async querySnapshot => {
                 let docArray = [];
                 await querySnapshot.forEach(doc => {
-                    docArray.push({ id: doc.id, message: doc.data().message, time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().sendBy, userId: doc.data().userId })
+                    docArray.push({ id: doc.id, message: doc.data().message, time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().sendBy, userId: doc.data().userId });
                 })
                 setGroupChatList(docArray)
             })
-        }
-        if(!unsubscribe) return;
+
         return () => unsubscribe()
     }, [groupID])
 
     useEffect(() => {
-        let unsubscribe;
-        if(combineUserId){
-            unsubscribe = firestore.collection("messages").doc(combineUserId).collection("individualMessages")
-                            .orderBy("createdAt").onSnapshot(async querySnapshot => {
-                                let docArray = [];
-                                await querySnapshot.forEach(doc => {
-                                    docArray.push({ id: doc.id, message: doc.data().message,  time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().displayName, userId: doc.data().userId })
-                                })
-                                setIndividualChatList(docArray);
-                            })
-        }
+        if(!combineUserId) return;
+        let unsubscribe = firestore.collection("messages").doc(combineUserId).collection("individualMessages")
+                    .orderBy("createdAt").onSnapshot(async querySnapshot => {
+                        let docArray = [];
+                        await querySnapshot.forEach(doc => {
+                            docArray.push({ id: doc.id, message: doc.data().message,  time: doc.data().createdAt.toDate().getHours() + ":" + doc.data().createdAt.toDate().getMinutes(), sendBy: doc.data().displayName, userId: doc.data().userId })
+                        })
+                        setIndividualChatList(docArray);
+                    })
 
         if(!unsubscribe) return;
         return () => unsubscribe();
@@ -104,6 +102,26 @@ const MainContextProvider = (props) => {
 
         return () => unsubscribe();              
     },[currentUser])
+
+    // useEffect(() => {
+    //     if(!groupsList) return;
+    //     let docArray = [];
+    //     groupsList.forEach(list => {
+    //         let unsubscribe = firestore.collection("messages").doc(list.id).collection("groupMessages").orderBy("createdAt").onSnapshot(async querySnapshot => {
+    //             await querySnapshot.forEach(doc => {
+    //                 docArray.push({ messageId: doc.id, groupName: list.title, groupId: list.id })
+    //             })
+    //             setUnseenMessages([...unseenMessages,...docArray]);
+    //         })
+    //         return () => unsubscribe();
+    //     })
+    // },[groupsList.length])
+
+    // useEffect(() => {
+    //     if(!unseenMessages.length) return;
+    //     if(!groupChatList.length) return
+    //     const groupNoti = unseenMessages.filter(message => message.messageId);
+    // }, [unseenMessages, groupChatList])
 
     return (
         <MainContext.Provider value={{ currentUser, groupsList, setGroupsList,groupChatMessage, setGroupChatMessage,
