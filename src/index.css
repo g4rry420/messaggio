@@ -1,5 +1,6 @@
 :root{
   --primaryColor: #195848;
+  --bgColor: #d7d8de;
 }
 html{
   scroll-behavior: smooth;
