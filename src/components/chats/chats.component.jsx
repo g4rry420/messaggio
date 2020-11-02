@@ -6,7 +6,7 @@ import { MainContext } from "../../context/main-context"
 
 export default function Chats({ match }) {
 
-    const { chatsList, setChatsList } = useContext(MainContext)
+    const { chatsList } = useContext(MainContext)
 
     return (
         <div className="container list-main-container">

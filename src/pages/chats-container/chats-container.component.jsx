@@ -1,20 +1,24 @@
-import React,{ useContext } from 'react'
+import React,{ useContext, lazy, Suspense } from 'react'
 import { Route,Redirect } from "react-router-dom"
 
 import "./chats-container.styles.css"
-import Chats from "../../components/chats/chats.component"
-import IndividualUser from "../individual-user/individual-user.component"
 import { MainContext } from "../../context/main-context"
+import Spinner from "../../components/spinner/spinner.component"
+
+const Chats = lazy(() => import("../../components/chats/chats.component"));
+const IndividualUser = lazy(() => import("../individual-user/individual-user.component"));
 
 export default function ChatsContainer({ match }) {
 
-    const { currentUser } = useContext(MainContext)
+    const { currentUser } = useContext(MainContext);
 
     if(!currentUser) return <Redirect to="/loginorsignup" />
     return (
         <div>
-            <Route exact path={match.path} component={Chats} />
-            <Route exact path={`${match.path}/:userId`} component={IndividualUser} />
+            <Suspense fallback={<Spinner/>}>
+                <Route exact path={match.path} component={Chats} />
+                <Route exact path={`${match.path}/:userId`} component={IndividualUser} />
+            </Suspense>
         </div>
     )
 }

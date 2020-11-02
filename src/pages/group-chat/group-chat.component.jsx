@@ -1,5 +1,4 @@
 import React,{ useContext, useEffect, useRef  } from 'react'
-import { v4 as uuidv4 } from "uuid"
 import { Link } from "react-router-dom"
 
 import "./group-chat.styles.css"

@@ -1,10 +1,13 @@
-import React,{ useContext } from 'react'
+import React,{ useContext, lazy, Suspense } from 'react'
 import { Route, Redirect } from "react-router-dom"
 
 import "./groups-container.styles.css"
-import Groups from "../../components/groups/groups.component"
-import GroupChat from "../group-chat/group-chat.component"
 import { MainContext } from "../../context/main-context"
+import Spinner from "../../components/spinner/spinner.component"
+
+
+const Groups = lazy(() => import("../../components/groups/groups.component"));
+const GroupChat = lazy(() => import("../group-chat/group-chat.component"));
 
 export default function GroupsContainer({ match }) {
 
@@ -14,8 +17,10 @@ export default function GroupsContainer({ match }) {
 
     return (
         <div>
-            <Route exact path={match.path} component={Groups} />
-            <Route path={`${match.path}/:groupId`} component={GroupChat} />
+            <Suspense fallback={<Spinner/>}>
+                <Route exact path={match.path} component={Groups} />
+                <Route path={`${match.path}/:groupId`} component={GroupChat} />
+            </Suspense>
         </div>
     )
 }

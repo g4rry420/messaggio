@@ -1,6 +1,5 @@
-import React,{ useContext, useEffect,useRef,useState } from 'react'
+import React,{ useContext, useEffect,useRef } from 'react'
 import { Link } from "react-router-dom"
-import { v4 as uuidv4 } from "uuid"
 
 import "./individual-user.component.jsx"
 import CustomButton from "../../components/custom-button/custom-button.component"
@@ -11,7 +10,7 @@ import { individualUserMessages } from "../../firebase/firebase.utils"
 export default function IndividualUser({ location: { state }  }) {
 
 
-    const { individualChatList, setIndividualChatList,individualChatMessage, setIndividualChatMessage,
+    const { individualChatList, individualChatMessage, setIndividualChatMessage,
             currentUser, combineUserId, setCombineUserId } = useContext(MainContext);   
 
     const chatMessagesRef = useRef();
