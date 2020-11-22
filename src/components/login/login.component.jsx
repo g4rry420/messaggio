@@ -51,6 +51,11 @@ export default function Login( {displayLogin, setDisplayLogin}) {
         </div>
         <CustomButton type="submit" title="Login" button="login-button" />
         <p>Didn't have account yet ? <span onClick={handleSignUp}>SignUp</span> </p>
+        <div className="text-center test-container">
+          <h4 className="display-4">Test Credentials</h4>
+          <h5 className="display-4">Email: test@user.com</h5>
+          <h5 className="display-4">Password: 1234567</h5>
+        </div>
       </div>
   </form>
   )
