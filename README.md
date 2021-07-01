@@ -30,7 +30,7 @@ Messaggio - An Chat Application . In this app, users first have send message int
 -   Users can chat real time with people in groups
 -   Users can also send message personally.
 
-<img src="./messaggio.PNG" width="100%" height="100%" />
+<img src="./messaggio.PNG" />
 
 ## Usage
 
